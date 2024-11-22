@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>by Niko~🚫🥷🏾</title>
+    <style>
+        /* Applique une image de fond sur l'ensemble du body */
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://files.catbox.moe/oauppc.jpeg'); /* Remplacez par le chemin vers votre image */
+            background-size: cover;  /* L'image couvre toute la page */
+            background-position: center center; /* Centre l'image */
+            background-attachment: fixed; /* L'image reste fixe lors du défilement */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Style de la div container */
+        .container {
+            background-color: rgba(255, 255, 255, 0.8); /* Fond semi-transparent pour mieux voir le texte */
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+        }
+
+        /* Style des titres et paragraphes */
+        h1 {
+            font-size: 3em;
+            text-align: center;
+            color: #ff3333;
+            margin-bottom: 20px;
+            font-family: 'Fira Code', monospace;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        #inputMessage, #welcome {
+            text-align: center;
+            font-size: 1.2em;
+            color: #333;
+            margin-top: 10px;
+        }
+
+        /* Champ de sélection et input */
+        select, input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            font-size: 1.1em;
+            box-sizing: border-box;
+        }
+
+        /* Styles pour les boutons */
+        button {
+            background-color: #007BFF;
+            color: white;
+            padding: 15px;
+            font-size: 1.2em;
+            cursor: pointer;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, transform 0.3s;
+            width: 100%;
+        }
+
+        /* Effet au survol */
+        button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        /* Effet lorsqu'on clique sur le bouton */
+        button:active {
+            background-color: #004080;
+        }
+
+        /* Message de prédiction */
+        #prediction {
+            font-size: 1.5em;
+            text-align: center;
+            margin-top: 20px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        /* Style des liens */
+        .links {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .links a {
+            text-decoration: none;
+            color: #007BFF;
+            font-size: 1.1em;
+        }
+
+        /* Ajouter un effet de survol sur le lien */
+        .links a:hover {
+            color: #0056b3;
+        }
+
+        /* Animation de chargement */
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 2s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <p id="inputMessage"></p> 
+            <h1>𝖥𝖨𝖥𝖠 𝖯𝖱𝖤́𝖣𝖨𝖢𝖳𝖮𝖱🔮</h1>
+            <p id="welcome">
+                Salut, je suis un bot spécialisé dans la prédiction des matchs virtuels FIFA🎮🧩!
+            </p>
+        </header>
+        <main>
+            <section class="championships">
+                <label for="championshipSelect">Sélectionnez un championnat :</label>
+                <select id="championshipSelect" onchange="loadChampionshipData()">
+                    <option value="">Sélectionnez un championnat</option>
+                    <option value="championship1">FIFA 5x5 Superligue</option>
+                    <option value="championship2">FIFA 3x3 Master League</option>
+                    <option value="championship3">FIFA 4x4 Championnat d'Angleterre</option>
+                </select>
+            </section>
+
+            <section class="predictions">
+                <label for="teamAInput">Équipe A:</label>
+                <input type="text" id="teamAInput" placeholder="Nom de l'équipe A">
+                
+                <label for="teamBInput">Équipe B:</label>
+                <input type="text" id="teamBInput" placeholder="Nom de l'équipe B">
+                
+                <button id="msg" onclick="generatePrediction()">Obtenir la prédiction !</button>
+            </section>
+            <p id="noteMessage">𝐍𝐁⛔:𝘚𝘪 𝘵𝘶 𝘯'𝘦́𝘤𝘳𝘪𝘴 𝘱𝘢𝘴 𝘤𝘰𝘳𝘳𝘦𝘤𝘵𝘦𝘮𝘦𝘯𝘵  𝘭𝘦 𝘯𝘰𝘮 𝘥𝘦𝘴 𝘦́𝘲𝘶𝘪𝘱𝘦𝘴, 𝘫𝘦 𝘯𝘦 𝘱𝘰𝘶𝘳𝘳𝘢𝘪 𝘱𝘢𝘴 𝘢𝘯𝘢𝘭𝘺𝘴𝘦𝘳 𝘭𝘦 𝘮𝘢𝘵𝘤𝘩 𝘲𝘶𝘦 𝘵𝘶 𝘴𝘰𝘶𝘩𝘢𝘪𝘵𝘦𝘴 𝘱𝘳𝘦́𝘥𝘪𝘳𝘦.</p>
+
+            <div id="loader" class="loader" style="display: none;"></div>
+
+            <p id="prediction"></p>        
+
+            <section class="links">
+                <a href="https://wa.me/22585134712" target="_blank">Contacter le dev</a>
+            </section>
+        </main>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
